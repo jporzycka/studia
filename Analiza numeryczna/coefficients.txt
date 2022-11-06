@@ -1,0 +1,6 @@
+2 1 0 1 (can write some comment which will not be readed)
+2 2 2 2
+3 (5+1j) 1 2 3
+4 0 1 1 4 6 7
+2 (1+1j) (4-2j) (3j)
+4 4 0 -5 0 1
