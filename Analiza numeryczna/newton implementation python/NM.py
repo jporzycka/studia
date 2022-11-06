@@ -48,7 +48,7 @@ def startNewtonMethod():
     # Reading line by line
     lines = coefficients_file.readlines()
 
-    # Defining function and 
+    # Defining function etc. for every line
     for line in lines:
         # List conversion, degree to int, coefficients to complex
         coefficients_str = line.strip().split(' ')
