@@ -60,11 +60,11 @@ def startNewtonMethod():
         # Calculating the necessary data
         f_func, diff_f_func, bound = prepare_data_for_NM(coefficients)
 
-        # Create a table of starting points in the calculated bounded area
+        # Create a table of start points in the calculated bounded area
         real_values = np.linspace(-bound, bound, 30)
         imaginary_values = np.linspace(-bound, bound, 30)
 
-        # Finding all roots of given function
+        # Finding (hopefully) all roots of given function
         roots = []
         for r in real_values:
             for im in imaginary_values:
@@ -78,7 +78,8 @@ def startNewtonMethod():
                         duplicate = True
                         break
                 if not duplicate:
-                    roots.append(round(next_root, 10))
+                    # tutaj zaokrąglanie nie ma sensu, format brzydki, coś wymyślić
+                    roots.append(next_root)
         
         print(roots)
     coefficients_file.close()
