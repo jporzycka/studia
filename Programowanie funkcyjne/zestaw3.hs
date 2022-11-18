@@ -66,6 +66,10 @@ Słowa nie muszą być podane w tej kolejności, ważne, żeby były
 wszystkie
 -}
 
+slowaDlugosci :: Char -> Char -> Integer -> [String]
+slowaDlugosci a b 0 = [[]]
+slowaDlugosci a b n = [z:x | x <- slowaDlugosci a b (n - 1), z <- [a, b]]
+
 {-
 ZADANIE 6
 Zaimplementować algorytm QuickSort o sygnaturze
@@ -106,9 +110,9 @@ sub_podlist xs _ = xs
 sieve :: [Integer] -> [Integer]
 sieve [] = []
 sieve (p:xs) = p:sieve (xs `sub_podlist` [p, p+p..])
-{-sieve (p:xs) | p < round(sqrt (last xs)) + 1 = p:sieve (xs `minus` [p, p+p..])
+{-sieve (p:xs) | p < round(sqrt (fromIntegral(last xs))) + 1 = p:sieve (xs `sub_podlist` [p, p+p..])
              | otherwise = []-}
 
 eratosthenes :: Integer -> [Integer]
-eratosthenes n = sieve [2..n]
+eratosthenes n = sieve [2..n] {-where m = round(sqrt (fromIntegral n))-}
 
