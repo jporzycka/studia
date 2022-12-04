@@ -1,0 +1,1 @@
+2 1 0 1 (can write some comment which will not be readed), degree = n, a0, a1, ..., an

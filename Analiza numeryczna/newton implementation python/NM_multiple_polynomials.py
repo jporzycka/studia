@@ -4,7 +4,6 @@ import sympy as sym
 import numpy as np
 import numpy as np
 
-
 def newtonMethod(x0, iterationNumber, f, df):
     x=x0 # Start point
     # We iterate a certain number of times. 
@@ -70,46 +69,57 @@ def contraction(f, df, ddf, L, root):
 
 
 def startNewtonMethod():
-    # Reading from file, defining function, derivative etc.
-    with open('first_line_coeff.txt','r') as coefficients_file:
-        first_line = coefficients_file.readline()
-    
-    # List conversion, degree to int, coefficients to complex
-    coefficients_str = first_line.strip().split(' ')
-    deg = int(coefficients_str[0])
+    coefficients_file = open('coefficients.txt','r')
+    # Reading line by line
+    lines = coefficients_file.readlines()
 
-    # This ensures that we ignore characters that are not polynomial coefficients in the file
-    coefficients = list(map(complex, coefficients_str[1:(deg+2)]))
+    # Defining function etc. for every line
+    for line in lines:
+        # List conversion, degree to int, coefficients to complex
+        coefficients_str = line.strip().split(' ')
+        deg = int(coefficients_str[0])
 
-    # Calculating the necessary data
-    f_func, diff_f_func, diff_diff_f_func, bound = prepare_data_for_NM(coefficients)
+        # This ensures that we ignore characters that are not polynomial coefficients in the file
+        coefficients = list(map(complex, coefficients_str[1:(deg+2)]))
 
-    # Create a table of start points in the calculated bounded area
-    real_values = np.linspace(-bound, bound, 30)
-    imaginary_values = np.linspace(-bound, bound, 30)
+        # Calculating the necessary data
+        f_func, diff_f_func, diff_diff_f_func, bound = prepare_data_for_NM(coefficients)
 
-    # Finding (hopefully) all roots of given function
-    roots = []
-    for r in real_values:
-        for im in imaginary_values:
-            x0 = r + im*1j
-            next_root = newtonMethod(x0, 200, f_func, diff_f_func)
+        # Create a table of start points in the calculated bounded area
+        real_values = np.linspace(-bound, bound, 30)
+        imaginary_values = np.linspace(-bound, bound, 30)
 
-            # Check if the calculated root is unique or was already calculated
-            duplicate = False
-            if type(next_root) != str:
-                for root in roots:
-                    if abs(root - next_root) < 1e-8:
-                        duplicate = True
-                        break
-                if not duplicate:
-                    for L in [0.009, 0.09, 0.9]:
-                        if contraction(f_func, diff_f_func, diff_diff_f_func, L, next_root):
-                            roots.append(next_root)
+        # Finding (hopefully) all roots of given function
+        roots = []
+        for r in real_values:
+            for im in imaginary_values:
+                x0 = r + im*1j
+                next_root = newtonMethod(x0, 200, f_func, diff_f_func)
+
+                # Check if the calculated root is unique or was already calculated
+                duplicate = False
+                if type(next_root) != str:
+                    for root in roots:
+                        if abs(root - next_root) < 1e-8:
+                            duplicate = True
                             break
+                    if not duplicate:
+                        for L in [0.009, 0.09, 0.9]:
+                            if contraction(f_func, diff_f_func, diff_diff_f_func, L, next_root):
+                                roots.append(next_root)
+                                break
                         
-    rounded_roots = [np.round(root, 6) for root in roots]
-    print(rounded_roots)
+        rounded_roots = [np.round(root, 6) for root in roots]
+        print(rounded_roots)
+    coefficients_file.close()
 
 
 startNewtonMethod()
+
+    
+
+
+
+
+
+
