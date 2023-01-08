@@ -85,4 +85,3 @@ y = calculate_result(a_coeffs, x)
 plt.plot(x, y, label=f"{1024} modes")
 plt.legend()
 plt.show()
-
