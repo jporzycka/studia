@@ -2,7 +2,6 @@
 
 import sympy as sym
 import numpy as np
-import numpy as np
 
 def newtonMethod(x0, iterationNumber, f, df):
     x=x0 # Start point

@@ -68,7 +68,7 @@ sixNodeCombinations nodes = filter ((==6) . length) (subsequences nodes)
 -- razem z istniejącymi krawędziami graf dwudzielny pełny
 isBipartiteGraph :: Graph -> [Int] -> Bool
 isBipartiteGraph graph nodes = all (\(x, y) -> hasEdge graph x y) [(nodes !! a, nodes !! b) | a <- [0..2], b <- [3..5]] &&
-                               all (\(x, y) -> hasEdge graph x y) [(nodes !! a, nodes !! b) | a <- [3..5], b <- [0..2]] &&
+                               --all (\(x, y) -> hasEdge graph x y) [(nodes !! a, nodes !! b) | a <- [3..5], b <- [0..2]] &&
                                all (\x -> not (hasEdge graph x x)) nodes &&
                                not (any (\(x, y) -> hasEdge graph x y) [(nodes !! a, nodes !! b) | a <- [0..2], b <- [0..2]]) &&
                                not (any (\(x, y) -> hasEdge graph x y) [(nodes !! a, nodes !! b) | a <- [3..5], b <- [3..5]])
