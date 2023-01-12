@@ -1,0 +1,156 @@
+Versionshantering
+----------------
+
+gsnws2 create
+git push -u
+
+git add ...
+git commit -m "..."
+git push origin HEAD:refs/for/prototype/<branchnamn> (Not LLV) [like: prototype/etomjoa_emsf_sr_connected]
+git add ...
+git commit --amend
+git push origin HEAD:refs/for/prototype/<branchnamn> (Not LLV)
+git push (Or submit in gerrit)
+gsnws2 publish
+gsnws2 deliver
+
+gsnws2 update
+gsnws2 build-baseline
+(gsnws2 build-baseline --gtt-scope 5G_Only --ttcn-amf-scope 5g_ttcn)
+
+
+If forget to set-upstream
+---------------
+git push origin HEAD~:refs/heads/<branchnamn>
+
+Rebase LLV
+---------------
+If yes changes will be pushed
+Ctrl+c when yes or no to double check
+When yes or no try open copy workspace
+
+TR
+----------------
+Create branch from master
+git push -u
+git add ...
+git commit
+gsnws2 rebase
+git push
+gsnws2 build-baseline -gtt-scope 5G_China_Only --ttcn-amf-scope 5g_ttcn
+gsnws2 publish
+*code review*
+*maybe*
+	gsnws2 rebase
+	gsnws2 build-baseline
+gsnws2 deliver (if working on own branch)
+
+Bt (CT) test
+----------------
+${GSN_WS_ROOT}/sgsn_mme/test/erlang_bt_tool/bt_run
+${GSN_WS_ROOT}/sgsn_mme/test/erlang_bt_tool/bt_run . <suite-file>.erl
+
+Trace viewer
+----------------
+java -jar /proj/sgsn-program/TraceViewer/trace_viewer/deploy/linux/TraceViewer.jar (OLD)
+java -jar /proj/sgsn-program/TraceViewer/deploy/linux/TraceViewer.jar
+
+Create workspace
+----------------
+/proj/sgsn-program/ezhoori/vscode/create_ws.py
+
+Dialyzer
+----------------
+gmake -j10 plt
+gmake -j10 dialyzer
+
+Wireshark
+----------------
+onewireshark
+Check lineCardTrace box
+
+
+Exmanannotate
+----------------
+/proj/sgsn-tools/exmannotate/exmannotate nsm/nsm_ngap_proc.erl
+
+
+Gtt test trace
+----------------
+"gtt_ms",
+"gtt_amf",
+"gtt_smf",
+"gtt_gNodeB"
+
+Team Git file (old)
+----------------
+/proj/sgsn-program/www/da/design/Team_Curious_lcs_nrppa/
+
+
+Render markdown
+----------------
+This is the command I use for render markdown files with uml diagrams:
+ 
+/local/gsnws/t-reqs-mobility/bin/t-reqs-convert-requirement --target-folder \<where to put html page\> \<markdownfile\>
+
+
+TTCN
+----------------
+
+compile binary amf
+	*make file located in /local/gsnws/sgsn_mme/test/ttcn3/amf_ttcn*
+	make -j10
+	make sync
+
+start simfast amf
+	*go to /local/gsnws/sgsn_mme/test/simfast/bin/*
+	./sf_start.py --amf
+
+stop simfast amf
+	*go to /local/gsnws/sgsn_mme/test/simfast/bin/*
+	./sf_stop.py
+
+create bin and log directories
+	ttcn3_quick_sync_amf.sh
+	*in simfast* setlocal
+
+create config file ("Testcases_node666_1.cfg")
+	*if code changes first make -j10 and make sync*
+	*test cases match so empty gives all and tc_1000 gives all in tc_1000 testsuite*
+	*executed in simfast, found at /local/gsnws/scratch/ttcn3sync*
+	ttcn3_create_cfg.py -b amf_ttcn -s <testcases>
+
+execute config file
+	*in simfast*
+	ttcn3_execute.py -b amf_ttcn Testcases_node666_1.cfg
+
+format log
+	*logs are stored in /local/gsnws/scratch/ttcn3sync*
+	ttcn3_logformat <log file>.log -o <output>.log
+
+wiresharktrace
+	*switch to routing (green) board*
+	ifconfig ext1 up
+	tcpdump -i ext1 -w /tmp/DPE_COMMONLOG/<name>.pcap
+	*run test*
+	*to stop ^C*
+	*file located /local/gsnws/tecsas_installations/erudkev/1/<branch>/logs/***.cap*
+
+erlang trace
+	*execute in NCB (yellow)*
+	trace:start([{local,on},{return,on}]).
+	trace:activate(["nsm","ngap","nmm","http2_dispatch"]).
+	trace:stop().
+	trace:merge([pretty]).
+	*exit erl shell ^d*
+	*file found /local/gsnws2/tecsas_installation/erudkev/1/<branch>/logs/
+
+[15:34] Richard Hoorn X
+alias eandeshark='/home/eandebj/ttcn3_wireshark.sh'
+
+/local/gsnws/tecsas_installations/eandebj/0
+
+
+
+
+

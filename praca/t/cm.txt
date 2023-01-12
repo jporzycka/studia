@@ -1,0 +1,36 @@
+Implementation of Emergency Services Fallback to EPS, Service Request triggered
+
+DESCRIPTION:
+AMF sets Emergency Services Fallback Indicator (EMF) IE in Registration Accept towards the UE.
+After receiving a Service Request with the Service Type indicating “Emergency Services Fallback”, 
+the AMF includes the Emergency Fallback Indicator in:
+	- Initial Context Setup Request for UE in IDLE mode,
+	- UE Context Modification Request for UE in CONNECTED mode,
+to the NG-RAN if the following conditions are all met:
+	- The “5GC Voice Support” feature is enabled.
+	- Emergency fallback is enabled (PLMN config)
+	- Core network type “EPC” is not restricted in subscription data
+	- N26 is enabled (PLMN config)
+	- RAT type “EUTRA” is not restricted in subscription data.
+	- UE supports S1
+
+Otherwise, the AMF sends a Service Reject with 5GMM Cause#9 “UE identity cannot be derived by the network” to the UE.
+
+Once AMF has sent the Initial Context Setup Request / UE Context Modification 
+Request to RAN, it will start a timer to wait for the response.
+
+Once AMF has received a successful N2 response, the Service request procedure will be successfully 
+concluded.
+
+If a failure response is received or N2 timer expires, no Service Reject will be sent. For UE in 
+IDLE mode, AMF will initiate N2 release. The AMF ends the Service request for Emergency Services 
+Fallback procedure and returns to the previous state.
+
+
+
+
+
+
+
+
+

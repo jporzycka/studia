@@ -1,0 +1,47 @@
+1. encryption supi to suci -> registration request to AMF ->
+AMF sends authentication request to UDM -> UDM sends 
+authentication response (after supi check after suci decryption)
+-> registration accept if ok
+
+2. -
+
+3. AMF - Access and Mobility Management Function
+AMF receives connection info from UE, is responsible 
+for example for UE registration, authentication and mobility. 
+
+   SMF - Session Management Function
+Is responsible for all messages related to session management.
+
+interfaces: UE --N1,N2--> AMF 
+	    AMF --N11--> SMF
+
+   gNodeB - 5G base station, it provides 
+connectivity to UE, in 4G was eNodeB
+
+   UDM - Unified Data Management, similar to HSS but for 5G
+
+   HSS - Home Subscriber Server, 4G, has subscriber data,
+responsible for example for authentication
+
+4. AMF - Access and Mobility Management Function
+   NR - New Radio
+   SMF - Session Management Function
+   5GS - 5G System
+   5GC - 5G Core Network
+   
+5. (?) User Equipment
+
+6. -
+
+7. High speed, low latency, greater capacity
+
+8. SMF, UDM, PCF, AMF
+
+9. N* (?)
+
+10. Namf (?)
+
+11, 12. registration, authentication, mobility, handovers
+
+13. NR initial access procedure (establishing connection with 
+the gNodeB?)
